@@ -10,18 +10,23 @@ import NumberInput from './components/inputs/NumberInput';
 
 function App() {
   const [api, setApi] = useState(null);
-  const [chain, setChain] = useState('');
+  const [_chain, setChain] = useState('');
   const [number1, setNumber1] = useState(0);
   const [number2, setNumber2] = useState(0);
-  const [status, setStatus] = useState('');
+  const [_status, setStatus] = useState('');
   const [ciphertext1, setCiphertext1] = useState('');
   const [ciphertext2, setCiphertext2] = useState('');
   const [operationIndex, setOperationIndex] = useState(0);
   const [decryptedResult, setDecryptedResult] = useState(0);
 
+  const [voteTitle, setVoteTitle] = useState('');
+  const [voteIndex, setVoteIndex] = useState(0);
+  const [voteResult, setVoteResult] = useState('');
+  const [voteCount, setVoteCount] = useState(0);
+
   useEffect(() => {
     const connect = async () => {
-      const wsProvider = new WsProvider('ws://127.0.0.1:9944'); // Replace with your node's WS address
+      const wsProvider = new WsProvider('wss://testnet.admeta.network'); // Replace with your node's WS address
       const api = await ApiPromise.create({ provider: wsProvider });
       setApi(api);
 
@@ -145,6 +150,106 @@ function App() {
     });
   };
 
+  const submitInitiateVote = async () => {
+    if (!api) return;
+
+    console.log('Initiating vote...');
+
+    const keyring = new Keyring({ type: 'sr25519' });
+    const alice = keyring.addFromUri('//Alice'); // Use Alice's account as in your screenshot
+
+    // Construct the extrinsic for `initiateVote`
+    const extrinsic = api.tx.fheVote.initiateVote(voteTitle);
+
+    // Sign and send the extrinsic
+    const unsub = await extrinsic.signAndSend(alice, ({ status, events }) => {
+      if (status.isInBlock) {
+        setStatus(`Completed at block hash #${status.asInBlock}`);
+        console.log(`Transaction included at blockHash ${status.asInBlock}`);
+
+        // Process the events
+        events.forEach(({ event: { data, method, section } }) => {
+          console.log(`Event: ${section}.${method}`, data.length);
+        });
+        unsub(); // Unsubscribe from further updates
+      } else {
+        setStatus(`Current status: ${status.type}`);
+        console.log(`Current status: ${status.type}`);
+      }
+    });
+  }
+
+  const submitCastVote = async (voteIndex, vote) => {
+    try {
+      if (!api) return;
+
+      console.log('Casting vote...');
+
+      const keyring = new Keyring({ type: 'sr25519' });
+      const alice = keyring.addFromUri('//Alice'); // Use Alice's account as in your screenshot
+
+      const extrinsic = api.tx.fheVote.vote(voteIndex, vote);
+
+      // Sign and send the extrinsic
+      const unsub = await extrinsic.signAndSend(alice, ({ status, events }) => {
+        if (status.isInBlock) {
+          setStatus(`Completed at block hash #${status.asInBlock}`);
+          console.log(`Transaction included at blockHash ${status.asInBlock}`);
+
+          // Process the events
+          events.forEach(({ event: { data, method, section } }) => {
+            console.log(`Event: ${section}.${method}`, data.length);
+          });
+          unsub(); // Unsubscribe from further updates
+        } else {
+          setStatus(`Current status: ${status.type}`);
+          console.log(`Current status: ${status.type}`);
+        }
+      });
+    } catch (error) {
+    }
+  }
+
+  const submitFinalizeVote = async (voteIndex) => {
+    try {
+      if (!api) return;
+
+      console.log('Finalizing vote...');
+
+      const keyring = new Keyring({ type: 'sr25519' });
+      const alice = keyring.addFromUri('//Alice'); // Use Alice's account as in your screenshot
+
+      const extrinsic = api.tx.fheVote.finalizeVote(voteIndex);
+
+      // Sign and send the extrinsic
+      const unsub = await extrinsic.signAndSend(alice, ({ status, events }) => {
+        if (status.isInBlock) {
+          setStatus(`Completed at block hash #${status.asInBlock}`);
+          console.log(`Transaction included at blockHash ${status.asInBlock}`);
+
+          // Process the events
+          events.forEach(({ event: { data, method, section } }) => {
+            console.log(`Event: ${section}.${method}`, data.length);
+
+            if (section === 'fheVote' && method === 'VoteResult') {
+              setVoteCount(data[2]); // Extract and set decrypted result
+              setVoteResult(
+                // total votes / 2 > yay votes
+                data[2] / 2 > data[1][0] ? 'NAY' : 'YAY'
+              )
+            }
+          });
+
+          unsub(); // Unsubscribe from further updates
+        } else {
+          setStatus(`Current status: ${status.type}`);
+          console.log(`Current status: ${status.type}`);
+        }
+      });
+    } catch (error) {
+    }
+  }
+
   const swapCiphertexts = () => {
     const temp = ciphertext1;
     setCiphertext1(ciphertext2);
@@ -233,6 +338,62 @@ function App() {
         </div>
         <div className="demo-output-subcontainer-row">
           Note: Reset values to perform another operation on 2 new numbers, as secret keys are generated for each operation.
+        </div>
+      </div>
+      <div className="demo-body">
+        <h2 className="body-text">
+          FHE Voting Demo
+        </h2>
+        <p className="body-text">
+          How can FHE be used in voting systems? In a voting system, FHE can be used to encrypt votes, tally the encrypted votes, and decrypt the final result without revealing individual votes. This ensures voter privacy and integrity of the election process.
+        </p>
+        <div className="demo-output-subcontainer">
+          <h3 className="body-text">
+            We can start off by initiating a vote
+          </h3>
+          <p className="body-text">
+            Name the title of the vote and click the button below to initiate the vote.
+          </p>
+          <NumberInput placeholder={'Enter vote title'} onInput={(e) => setVoteTitle(e.target.value)} />
+          <MainButton onClick={() => submitInitiateVote()} buttonText="Initiate Vote" />
+        </div>
+        <div className="demo-output-subcontainer">
+          <h3 className="body-text">
+            Vote Casting Process
+          </h3>
+          <p className="body-text">
+            For example, here we can cast votes, click the button below to cast your vote. The votes will be encrypted and add to their respective tallies.
+          </p>
+          <NumberInput placeholder={'Index of voting pool'} onInput={(e) => setVoteIndex(e.target.value)} />
+        </div>
+        <div className="demo-output-subcontainer-row">
+          <MainButton onClick={() => submitCastVote(voteIndex, 'Yes')} buttonText="Cast YAY vote" />
+          <MainButton onClick={() => submitCastVote(voteIndex, 'No')} buttonText="Cast NAY vote" />
+        </div>
+        <div className="demo-output-subcontainer">
+          <h3 className="body-text">
+            Finalize Vote
+          </h3>
+          <p className="body-text">
+            Once all votes have been cast, click the button below to finalize the vote.
+          </p>
+          <MainButton onClick={() => submitFinalizeVote(voteIndex)} buttonText="Finalize Vote" />
+        </div>
+        <div className="demo-output-subcontainer">
+          <h3 className="body-text">
+            Result of Vote
+          </h3>
+          <p className="body-text">
+            The result of the vote is displayed here. This is the decrypted result of the vote. Where the tallies are compared and the result is displayed.
+          </p>
+          <p className="body-text">
+            Vote Result:
+          </p>
+          <NumberInput placeholder={'Result'} onInput={(e) => setVoteResult(e.target.value)} value={voteResult} />
+          <p className="body-text">
+            Vote Count:
+          </p>
+          <NumberInput placeholder={'Result'} onInput={(e) => setVoteCount(e.target.value)} value={voteCount} />
         </div>
       </div>
     </div>
