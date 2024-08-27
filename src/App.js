@@ -73,7 +73,43 @@ function App() {
   };
 
   // decrypt extrinsic
-  const submitDecryptNumbers = async (operation) => {
+  // const submitDecryptCiphertext_index = async (operation) => {
+  //   if (!api) return;
+
+  //   console.log('Decrypting numbers...');
+
+  //   const keyring = new Keyring({ type: 'sr25519' });
+  //   const alice = keyring.addFromUri('//Alice'); // Use Alice's account as in your screenshot
+
+  //   // Construct the extrinsic for `encryptNumbers`
+  //   const extrinsic = api.tx.fheMath.decryptResult(operationIndex, operation);
+
+  //   // Sign and send the extrinsic
+  //   const unsub = await extrinsic.signAndSend(alice, ({ status, events }) => {
+  //     if (status.isInBlock) {
+  //       setStatus(`Completed at block hash #${status.asInBlock}`);
+  //       console.log(`Transaction included at blockHash ${status.asInBlock}`);
+
+  //       // Process the events
+  //       events.forEach(({ event: { data, method, section } }) => {
+  //         console.log(`Event: ${section}.${method}`, data.length);
+
+  //         // Assuming the event is `fheMath.CiphertextsGenerated` (replace with your actual event)
+  //         if (section === 'fheMath' && method === 'ResultDecrypted') {
+  //           setDecryptedResult(data[1][0]); // Extract and set decrypted result
+  //         }
+
+  //         console.log(`Decrypted Result: ${decryptedResult}`);
+  //       });
+  //       unsub(); // Unsubscribe from further updates
+  //     } else {
+  //       setStatus(`Current status: ${status.type}`);
+  //       console.log(`Current status: ${status.type}`);
+  //     }
+  //   });
+  // };
+
+  const submitDecryptCiphertext = async (operation) => {
     if (!api) return;
 
     console.log('Decrypting numbers...');
@@ -82,7 +118,7 @@ function App() {
     const alice = keyring.addFromUri('//Alice'); // Use Alice's account as in your screenshot
 
     // Construct the extrinsic for `encryptNumbers`
-    const extrinsic = api.tx.fheMath.decryptResult(operationIndex, operation);
+    const extrinsic = api.tx.fheMath.decryptCiphertexts(ciphertext1, ciphertext2, operationIndex, operation);
 
     // Sign and send the extrinsic
     const unsub = await extrinsic.signAndSend(alice, ({ status, events }) => {
@@ -109,14 +145,10 @@ function App() {
     });
   };
 
-  const restValues = () => {
-    setNumber1(0);
-    setNumber2(0);
-    setCiphertext1('');
-    setCiphertext2('');
-    setDecryptedResult(0);
-
-    setOperationIndex(operationIndex + 1);
+  const swapCiphertexts = () => {
+    const temp = ciphertext1;
+    setCiphertext1(ciphertext2);
+    setCiphertext2(temp);
   }
 
 
@@ -162,13 +194,14 @@ function App() {
           <div className="demo-input-subcontainer">
             <NumberInput placeholder={'Enter first number'} onInput={(e) => setNumber1(e.target.value)} />
             <NumberInput placeholder={'Enter second number'} onInput={(e) => setNumber2(e.target.value)} />
+            <NumberInput placeholder={'Enter operation index'} onInput={(e) => setOperationIndex(e.target.value)} />
           </div>
           <div className="demo-input-subcontainer">
             <h3 className="body-text">
               What is happening here?
             </h3>
             <p className="body-text">
-              In the input fields above, you can enter two numbers. These numbers will be encrypted into ciphertexts then you are able to perform arithmetic operations on them. The result will be decrypted and displayed below. Click the button below to encrypt and perform the operation.
+              In the input fields above, you can enter two numbers. These numbers will be encrypted into ciphertexts then you are able to perform arithmetic operations on them. The result will be decrypted and displayed below. Click the button below to encrypt and perform the operation. Remember to update the operation index as you create new ciphertexts.
             </p>
             <MainButton onClick={submitEncryptNumbers} buttonText="Encrypt" />
           </div>
@@ -184,9 +217,10 @@ function App() {
           <NumberInput placeholder={'Result'} onInput={(e) => setCiphertext2(e.target.value)} value={ciphertext2} />
         </div>
         <div className="demo-output-subcontainer-row">
-          <MainButton onClick={() => submitDecryptNumbers('Add')} buttonText="Add & Decrypt" />
-          <MainButton onClick={() => submitDecryptNumbers('Sub')} buttonText="Subtract & Decrypt" />
-          <MainButton onClick={() => submitDecryptNumbers('Mul')} buttonText="Multiply & Decrypt" />
+          <MainButton onClick={() => submitDecryptCiphertext('Add')} buttonText="Add & Decrypt" />
+          <MainButton onClick={() => submitDecryptCiphertext('Sub')} buttonText="Subtract & Decrypt" />
+          <MainButton onClick={() => submitDecryptCiphertext('Mul')} buttonText="Multiply & Decrypt" />
+          <MainButton onClick={() => swapCiphertexts()} buttonText="Swap Position" />
         </div>
         <div className="demo-output-subcontainer">
           <h3 className="body-text">
@@ -198,7 +232,7 @@ function App() {
           <NumberInput placeholder={'Result'} onInput={(e) => setDecryptedResult(e.target.value)} value={decryptedResult} />
         </div>
         <div className="demo-output-subcontainer-row">
-          <MainButton onClick={restValues} buttonText="Reset Values" />
+          Note: Reset values to perform another operation on 2 new numbers, as secret keys are generated for each operation.
         </div>
       </div>
     </div>
