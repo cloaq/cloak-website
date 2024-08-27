@@ -194,7 +194,7 @@ function App() {
           <div className="demo-input-subcontainer">
             <NumberInput placeholder={'Enter first number'} onInput={(e) => setNumber1(e.target.value)} />
             <NumberInput placeholder={'Enter second number'} onInput={(e) => setNumber2(e.target.value)} />
-            <NumberInput placeholder={'Enter operation index'} onInput={(e) => setOperationIndex(e.target.value)} />
+            <NumberInput placeholder={'Enter operation index, first operation is 0'} onInput={(e) => setOperationIndex(e.target.value)} />
           </div>
           <div className="demo-input-subcontainer">
             <h3 className="body-text">
