@@ -3,11 +3,12 @@ import './NumberInput.css'
 
 const NumberInput = ({
     onInput,
-    placeholder
+    placeholder,
+    value
 }) => {
     return (
-        <div className="demo-input" onInput={onInput}>
-            <textarea placeholder={placeholder} className="demo-input-field" />
+        <div className="demo-input">
+            <textarea placeholder={placeholder} className="demo-input-field" onInput={onInput} value={value} />
         </div>
     )
 }

@@ -6,8 +6,8 @@ const MainButton = ({
     buttonText
 }) => {
     return (
-        <button class="button" onClick={onClick}>
-            <p class="text">
+        <button className="button" onClick={onClick}>
+            <p className="text">
                 {buttonText}
             </p>
         </button>
