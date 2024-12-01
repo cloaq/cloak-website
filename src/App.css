@@ -56,6 +56,21 @@
   }
 }
 
+.polkadot-logo {
+  position: absolute;
+  display: flex;
+  top: 20px;
+  right: 20px;
+  height: auto;
+  width: auto;
+
+  img {
+    width: auto;
+    height: 50px;
+    animation: fadeIn 4s ease-out forwards;
+  }
+}
+
 .scroll-down {
   position: absolute;
   bottom: 20px;

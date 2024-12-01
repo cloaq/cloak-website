@@ -3,6 +3,7 @@ import { Light as SyntaxHighlighter } from 'react-syntax-highlighter';
 import rust from 'react-syntax-highlighter/dist/esm/languages/hljs/rust';
 import { atomOneDark } from 'react-syntax-highlighter/dist/esm/styles/hljs'
 import './App.css';
+import polkadotlogo from './assets/Polkadot_Logo_Pink-Black.svg';
 
 import GithubButton from './components/buttons/GithubButton';
 
@@ -87,6 +88,9 @@ pub mod pallet {
 
   return (
     <div className="website-bg">
+      <div className='polkadot-logo'>
+        <img src={polkadotlogo} alt='Polkadot Logo' />
+      </div>
       <div className="hero-container">
         <div className='scroll-down' onClick={() => document.getElementById('body').scrollIntoView({ behavior: 'smooth' })}>
           Scroll down
@@ -151,7 +155,7 @@ pub mod pallet {
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 
