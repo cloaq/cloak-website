@@ -11,15 +11,24 @@
     border: none;
     cursor: pointer;
     transition: 400ms;
+
+    @media (max-width: 1000px) {
+        padding: 10px 10px;
+    }
 }
 
 .button .text {
     color: white;
     font-weight: 600;
     font-size: 1.5rem;
+    /* Base font size */
     font-family: "Helanoir Regular", serif;
     margin: 0;
     transition: 400ms;
+
+    @media (max-width: 1000px) {
+        font-size: 1.2rem;
+    }
 }
 
 .button svg path {
