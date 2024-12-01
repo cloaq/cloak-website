@@ -1,152 +1,308 @@
 .website-bg {
-  /* A grid design */
+  position: relative;
   top: 0;
   left: 0;
   width: auto;
   height: auto;
-  background-color: #000;
-  background-image:
-    linear-gradient(to right, rgba(122, 88, 88, 0.2) 1px, transparent 1px),
+  min-height: 100vh;
+  background-color: #f3f3f3;
+  background-image: linear-gradient(to right, rgba(122, 88, 88, 0.2) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(122, 88, 88, 0.2) 1px, transparent 1px);
   background-size: 25px 25px;
-  padding-bottom: 10vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-.header {
-  /* A grid design */
-  display: flex;
+.hero-container {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 90%;
+  height: 100vh;
   background-color: transparent;
-  color: #fff;
-  width: auto;
-  align-items: flex-start;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
   justify-content: center;
-  flex-direction: column;
-  padding: 20vh 10vw 0 10vw;
+}
 
-  h1 {
-    font-size: 3rem;
-    margin: 0;
+@keyframes bounce {
+
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateX(-50%) translateY(0);
+  }
+
+  40% {
+    transform: translateX(-50%) translateY(-10px);
+  }
+
+  60% {
+    transform: translateX(-50%) translateY(-5px);
   }
 }
 
-.logo {
+.scroll-down {
   position: absolute;
-  top: 30px;
-  left: -20px;
-  transform: rotate(-45deg);
-}
-
-.body {
-  /* A grid design */
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: auto;
+  height: 30px;
+  border-radius: 50%;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
-  flex-direction: column;
-  padding: 5vh 10vw 0 10vw;
-  gap: 20px;
-
-  h2 {
-    font-size: 2rem;
-    color: lightcoral;
-    margin: 0;
-  }
-
-  p {
-    font-size: 1.5rem;
-  }
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-family: 'Helanoir Regular', serif;
+  color: #000;
+  font-weight: 600;
+  animation: bounce 2s infinite;
 }
 
-.demo-body {
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  flex-direction: column;
-  padding: 10vh 10vw 0 10vw;
-
-  gap: 20px;
-
-  h2 {
-    font-size: 2.4rem;
-    color: lightcoral;
-    margin: 0;
-  }
-
-  p {
-    font-size: 1.5rem;
-    margin: 0;
-  }
-}
-
-.demo-input-container {
-  display: flex;
-  width: 100%;
+.header-container {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 40%;
   height: auto;
+  display: flex;
+  flex-direction: column;
   align-items: flex-start;
   justify-content: center;
+}
+
+.header-text,
+.subheader-text {
+  margin: 0;
+  padding: 0;
+  font-family: "Helanoir Regular", serif;
+  color: #000;
+  opacity: 1;
+  /* animation: fadeIn 4s ease-out forwards; */
+}
+
+.header-text {
+  font-size: 5rem;
+  font-weight: 700;
+}
+
+.subheader-text {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.button-container {
+  position: relative;
+  height: auto;
+  display: flex;
   flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0 0 0;
   gap: 20px;
 
-  h3 {
-    font-size: 2rem;
-    font-weight: 700;
-    margin: 0;
-  }
-
-  p {
+  a {
+    color: black;
+    font-weight: 600;
     font-size: 1.5rem;
+    font-family: "Helanoir Regular", serif;
     margin: 0;
+    transition: 400ms;
   }
 }
 
-.demo-input-subcontainer {
+.code-container {
+  margin: 20px auto;
+  border-radius: 8px;
+  background: #1e1e1e;
+  /* Dark background to match the theme */
+  overflow-x: auto;
+  /* Enable horizontal scrolling for long lines */
+  max-width: 800px;
+  /* Set maximum width */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+pre {
+  margin: 0;
+  font-family: 'Fira Code', monospace;
+  /* Monospaced font for better readability */
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.body-container {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 90%;
+  height: auto;
   display: flex;
-  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.body-content-container-1 {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin: 100px 0 100px 0;
+}
+
+.body-content-container-2 {
+  position: relative;
+  width: 100%;
+  height: 700px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-image: url("./assets/Polkadot_Token_Pink.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin: 100px 0 100px 0;
+}
+
+.text-sub-container {
   width: 50%;
-  height: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  flex-direction: column;
-  gap: 20px;
 }
 
-.demo-output-subcontainer {
-  display: flex;
-  width: 100%;
+.text-sub-container-2 {
+  width: 50%;
   height: auto;
-  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  flex-direction: column;
-  gap: 20px;
+  backdrop-filter: blur(10px);
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 20px;
+  padding: 10px;
+}
 
-  h3 {
-    font-size: 2rem;
-    font-weight: 700;
-    margin: 0;
+.animation-sub-container {
+  width: 50%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .animation-box {
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px;
+    font-weight: 600;
+    text-align: center;
+    color: black;
+    font-size: 4rem;
+    font-family: 'Helanoir Regular', serif;
   }
 
-  p {
-    font-size: 1.5rem;
-    margin: 0;
+  .animation-text {
+    transition: opacity 0.5s ease-in-out;
   }
 }
 
-.demo-output-subcontainer-row {
-  display: flex;
+.body-header {
+  font-family: "Helanoir Regular", serif;
+  font-size: 3rem;
+  font-weight: 700;
+  color: #000;
+  margin: 20px 0;
+}
+
+.body-header-span {
+  color: #2f00ff;
+}
+
+.body-text {
+  font-family: "Helanoir Regular", serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: #000;
+  margin: 20px 0;
+}
+
+.footer-container {
+  position: relative;
+  top: 0;
+  left: 0;
   width: 100%;
   height: auto;
-  align-items: flex-start;
-  justify-content: flex-start;
+  display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-evenly;
+  background-color: #000;
+  color: #fff;
+  padding: 20px;
   gap: 20px;
+}
 
-  h3 {
-    font-size: 2rem;
-    font-weight: 700;
-    margin: 0;
-  }
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  width: 90%;
 
   p {
-    font-size: 1.5rem;
+    font-family: "Helanoir Regular", serif;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: #fff;
     margin: 0;
+    transition: 400ms;
+  }
+}
+
+.footer-link {
+  font-family: "Helanoir Regular", serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #fff;
+  margin: 0;
+  transition: 400ms;
+}
+
+.footer-link-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+
+  a {
+    color: #fff;
+    font-weight: 600;
+    font-size: 1.2rem;
+    font-family: "Helanoir Regular", serif;
+    margin: 0;
+    transition: 400ms;
   }
 }
