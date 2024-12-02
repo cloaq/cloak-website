@@ -116,7 +116,7 @@ pub mod pallet {
           <div className="animation-sub-container">
             <AnimationSubContainer />
           </div>
-          <div className="text-sub-container">
+          <div className="text-sub-container-1">
             <h1 className="body-header">
               Introduction to FHE <br />
               <span className="body-header-span">Fully Homomorphic Encryption</span>
