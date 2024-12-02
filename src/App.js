@@ -112,31 +112,29 @@ pub mod pallet {
         </div>
       </div>
       <div className="body-container" id='body'>
-        <div className="body-content">
-          <div className="body-content-container-1">
-            <div className="animation-sub-container">
-              <AnimationSubContainer />
-            </div>
-            <div className="text-sub-container">
-              <h1 className="body-header">
-                Introduction to FHE <br />
-                <span className="body-header-span">Fully Homomorphic Encryption</span>
-              </h1>
-              <p className="body-text">
-                A pharmaceutical company wants to analyze patient data from multiple hospitals to study the effectiveness of a new drug. Each hospital encrypts their patient data with FHE and uploads it to a data marketplace. The pharmaceutical company runs its analysis on the encrypted data across all hospitals. The results, such as drug efficacy metrics, are then decrypted by each hospital and shared with the pharmaceutical company, ensuring that patient privacy is preserved throughout the process.
-              </p>
-            </div>
+        <div className="body-content-container-1">
+          <div className="animation-sub-container">
+            <AnimationSubContainer />
           </div>
-          <div className="body-content-container-2">
-            <div className="text-sub-container-2">
-              <h1 className="body-header">
-                Why Cloaq?<br />
-                <span className="body-header-span">Polkadot-sdk Integrated FHE</span>
-              </h1>
-              <p className="body-text">
-                Cloaq is a Rust library that integrates Fully Homomorphic Encryption (FHE) with the Polkadot-SDK. This allows developers to build privacy-preserving applications on the Polkadot network that can perform computations on encrypted data. Cloaq provides a set of APIs for encrypting and decrypting data, as well as performing arithmetic operations on encrypted data using FHE.
-              </p>
-            </div>
+          <div className="text-sub-container">
+            <h1 className="body-header">
+              Introduction to FHE <br />
+              <span className="body-header-span">Fully Homomorphic Encryption</span>
+            </h1>
+            <p className="body-text">
+              A pharmaceutical company wants to analyze patient data from multiple hospitals to study the effectiveness of a new drug. Each hospital encrypts their patient data with FHE and uploads it to a data marketplace. The pharmaceutical company runs its analysis on the encrypted data across all hospitals. The results, such as drug efficacy metrics, are then decrypted by each hospital and shared with the pharmaceutical company, ensuring that patient privacy is preserved throughout the process.
+            </p>
+          </div>
+        </div>
+        <div className="body-content-container-2">
+          <div className="text-sub-container-2">
+            <h1 className="body-header">
+              Why Cloaq?<br />
+              <span className="body-header-span">Polkadot-sdk Integrated FHE</span>
+            </h1>
+            <p className="body-text">
+              Cloaq is a Rust library that integrates Fully Homomorphic Encryption (FHE) with the Polkadot-SDK. This allows developers to build privacy-preserving applications on the Polkadot network that can perform computations on encrypted data. Cloaq provides a set of APIs for encrypting and decrypting data, as well as performing arithmetic operations on encrypted data using FHE.
+            </p>
           </div>
         </div>
       </div>
